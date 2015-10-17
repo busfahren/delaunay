@@ -1,34 +1,36 @@
 from triangulate import *
 from triangle import *
-from errors import *
 
 img = loadImage('./images/hearken.jpg')
 
 points = []
 triangles = []
+n = 300
+showImage = True
+transparent = False
 
 def setup():
-	global points, triangles
+	global points, triangles, n
 
-	size(img.width/2, img.height/2)
+	size(img.width, img.height)
 	img.loadPixels()
 
-	points = sorted(generateRandomPoints(200, width, height), key=lambda p: p.x)
+	points = sorted(generateRandomPoints(n, width, height), key=lambda p: p.x)
 	triangles = triangulate(points)
+
+	noStroke()
 
 def draw():
 	background(255)
-	strokeWeight(2)
 
-	# image(img, 0, 0) # Show/hide image
+	if showImage:
+		image(img, 0, 0)
 
 	for triangle in triangles:
 
 		index = img.width * int(triangle.incenter.y) + int(triangle.incenter.x)
 		c = img.pixels[index]
-		fill(c)
-		stroke(c)
+		fill(c, 127 if transparent else 255)
 
 		triangle.display()
-
 	noLoop()

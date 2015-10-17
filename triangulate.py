@@ -4,7 +4,6 @@ def generateRandomPoints(number, width, height):
 	points = []
 	for i in xrange(number):
 		points.append(PVector(int(random(width)), int(random(height))))
-		# points.append(PVector(random(width), random(height)))
 	return points
 
 def superTriangle(points):
