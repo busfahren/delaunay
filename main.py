@@ -7,30 +7,33 @@ points = []
 triangles = []
 n = 300
 showImage = True
-transparent = False
+transparent = True
+
 
 def setup():
-	global points, triangles, n
+    global points, triangles, n
 
-	size(img.width, img.height)
-	img.loadPixels()
+    size(img.width, img.height)
+    img.loadPixels()
 
-	points = sorted(generateRandomPoints(n, width, height), key=lambda p: p.x)
-	triangles = triangulate(points)
+    points = sorted(generateRandomPoints(n, width, height), key=lambda p: p.x)
+    triangles = triangulate(points)
 
-	noStroke()
+    noStroke()
+
 
 def draw():
-	background(255)
+    background(255)
 
-	if showImage:
-		image(img, 0, 0)
+    if showImage:
+        image(img, 0, 0)
 
-	for triangle in triangles:
+    for triangle in triangles:
 
-		index = img.width * int(triangle.incenter.y) + int(triangle.incenter.x)
-		c = img.pixels[index]
-		fill(c, 127 if transparent else 255)
+        index = img.width * int(triangle.incenter.y) + int(triangle.incenter.x)
+        c = img.pixels[index]
+        fill(c, 127 if transparent else 255)
 
-		triangle.display()
-	noLoop()
+        triangle.display()
+    noLoop()
+    # save('./out.png')
